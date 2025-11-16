@@ -13,3 +13,16 @@ PyGame PC Game
 - Different enemies are trying to attack and kill you
 - The health bar appears on top of the enemy or boss
 - Enemy's health increases when dimensions are higher
+
+# Commands:
+
+activate .venv on MacOS: 
+
+```bash 
+source .venv/bin/activate 
+```
+to deactivate .venv: 
+
+```bash
+deactivate
+```

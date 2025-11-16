@@ -696,7 +696,7 @@ while running:
         else:
             # Возвращаем обычного героя (в зависимости от направления)
             if keys[pygame.K_d]:
-                hero = hero_img_right
+               hero = hero_img_right
             elif keys[pygame.K_a]:
                 hero = hero_img_left
 

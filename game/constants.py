@@ -1,51 +1,22 @@
-from enum import (
-    IntEnum,
-    auto,
-)
-
 import pygame as pg
+from pathlib import Path
 
 
-class FOG(IntEnum):
-    DARK = auto()
-    KNOWN = auto()
-    LIT = auto()
-
-
-class TILES(IntEnum):
-    FLOOR = auto()
-    WALL = auto()
-    PLAYER = auto()
-    EXIT = auto()
-
-
-CAPTION = 'Cave Explorer PC game / Use WASD keys'
-FPS = 8
-SCREEN_SIZE = (600, 600)
-INITIAL_TILE_SIZE = 34
-MIN_TILE_SIZE = 10
-TILE_CHANGE_SIZE = 3
-LIGHT_RADIUS = 3.2
-
-FOG_OFFSET = 100
-MOVE_TILES = {TILES.FLOOR, TILES.EXIT}
-FOG_TILES = {TILES.FLOOR, TILES.WALL, TILES.EXIT}
-
-COLORS = {
-    TILES.FLOOR: (90, 90, 180),
-    TILES.FLOOR + FOG_OFFSET: (45, 45, 90),
-    TILES.WALL: (120, 120, 120),
-    TILES.WALL + FOG_OFFSET: (60, 60, 60),
-    TILES.PLAYER: (255, 0, 0),
-    TILES.EXIT: (0, 255, 0),
-    TILES.EXIT + FOG_OFFSET: (0, 120, 0),
-}
+GAME_PATH = Path(__file__).parent
+PROJECT_PATH = GAME_PATH.parent
+STATIC_PATH = PROJECT_PATH / "static"
+SKINS_PATH = STATIC_PATH / "skins"
+BACKGROUNDS_PATH = STATIC_PATH / "backgrounds"
+BACKGROUNDS_FOLDER = str(STATIC_PATH / "backgrounds")
+SKINS_FOLDER = str(SKINS_PATH)
+DEFAULT_BACKGROUND = pg.image.load(str(BACKGROUNDS_PATH / "Basic_forest.png"))
+CAPTION = 'George through the multiverse / Use AD keys for motion / SPACE to jump and E to shoot'
+FPS = 25
+SCREEN_SIZE = (1296, 768)
 
 MOVES = {
-    pg.K_w: (-1, 0),
-    pg.K_a: (0, -1),
-    pg.K_s: (1, 0),
-    pg.K_d: (0, 1),
+    pg.K_d,
+    pg.K_a,
+    pg.K_e,
+    pg.K_SPACE,
 }
-
-POPULATION_PER_SEED = 90

@@ -1,6 +1,6 @@
 import asyncio
 
-from config import config
+
 from constants import FPS
 from game_core import (
     initialize_pygame,
@@ -15,7 +15,7 @@ async def main():
     player = Player()
     entities = [player]
 
-    while process_events(entities):
+    while process_events(player, entities):
         render_game(screen)
 
         clock.tick(FPS)

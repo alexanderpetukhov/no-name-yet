@@ -45,7 +45,7 @@ def is_move_event(event_type, event_key):
     return event_key in MOVES
 
 
-def process_events(player, grid, fog):
+def process_events(entities):
     is_running = True
 
     for event in pg.event.get():
@@ -56,17 +56,12 @@ def process_events(player, grid, fog):
             pg.quit()
 
         if is_move_event(event.type, event_key):
-            player.examine_move_event(event.type, event_key)
-
-    player.move(grid)
-
-    if player.has_moved:
-        update_fog(fog, player.row, player.col)
+            player.examine_move_event(event.type, event_key)  # TODO: change
 
     return is_running
 
 
-def render_game(screen, grid, fog):
+def render_game(screen):
     screen.fill('black')
 
     row_pixel = -config.tile_size + config.row_offset
@@ -77,16 +72,7 @@ def render_game(screen, grid, fog):
 
         for col in range(config.tiles_cols):
             col_pixel += config.tile_size
-
-            if fog[row][col] == FOG.DARK:
-                continue
-
-            entity_value = grid[col][row]
-
-            if entity_value in FOG_TILES and fog[row][col] == FOG.KNOWN:
-                entity_value += FOG_OFFSET
-
-            surface = config.surfaces[entity_value]
+            surface = config.surfaces[entity_value]  # TODO: change
             screen.blit(surface, (row_pixel, col_pixel))
 
     pg.display.flip()

@@ -55,7 +55,7 @@ def process_events(player):
             pg.quit()
 
         if is_move_event(event.type, event_key):
-            player.move(event_key)
+            player.move(event_key, event.type)
 
     return is_running
 

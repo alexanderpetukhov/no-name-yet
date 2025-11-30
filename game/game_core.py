@@ -2,7 +2,7 @@ from functools import cache
 
 import pygame as pg
 
-from constants import (
+from game.constants import (
     MOVES,
     CAPTION,
     SCREEN_SIZE,
@@ -10,7 +10,7 @@ from constants import (
     DEFAULT_BACKGROUND,
 )
 
-# /Users/aleksandrpetuhov/Desktop/dev/george_game/static/backgrounds/Basic_forest.png
+
 def initialize_pygame():
     pg.init()
     screen: pg.Surface = pg.display.set_mode(SCREEN_SIZE)

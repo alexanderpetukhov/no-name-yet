@@ -1,44 +1,54 @@
 import pygame as pg
 
-from constants import (
+from game.constants import (
     SKINS_PATH,
     PLAYER_START,
+    PLAYER_X_SPEED,
     SCREEN_SIZE,
     GRAVITY_ACCELERATION,
     PLAYER_JUMP_SPEED,
+    RED_COLOR,
+    SHOW_COLLISIONS,
+    HORIZON_Y,
 )
-from game.constants import HORIZON_Y
 
 
 class Player(pg.sprite.Sprite):
     def __init__(self):
         super().__init__()
+
         self.image = pg.image.load(str(SKINS_PATH / "hero right.png"))
         self.image_facing_left = pg.transform.flip(self.image, True, False)
         self.image_facing_right = self.image
         self.rect = self.image.get_rect()
+
         self.rect.midtop = PLAYER_START
         self.collision_rect = self.rect.inflate(-16, -16)
-        self.show_collision = True
+
         self.x_speed = 0
         self.y_speed = 100
         self.y_acceleration = 0
 
+        self.going_right = False
+        self.going_left = False
+
     def move(self, pressed_key, event_type):
         if pg.K_d == pressed_key:
-            if event_type == pg.KEYDOWN:
-                self.x_speed = 10
-                self.image = self.image_facing_right
-            else:
-                self.x_speed = 0
-        elif pg.K_a == pressed_key:
-            if event_type == pg.KEYDOWN:
-                self.x_speed = -10
-                self.image = self.image_facing_left
-            else:
-                self.x_speed = 0
+            self.going_right = event_type == pg.KEYDOWN
 
-        elif pg.K_SPACE == pressed_key:
+        if pg.K_a == pressed_key:
+            self.going_left = event_type == pg.KEYDOWN
+
+        if self.going_right and not self.going_left:
+            self.x_speed = PLAYER_X_SPEED
+            self.image = self.image_facing_right
+        elif self.going_left and not self.going_right:
+            self.x_speed = -PLAYER_X_SPEED
+            self.image = self.image_facing_left
+        else:
+            self.x_speed = 0
+
+        if pg.K_SPACE == pressed_key:
             if event_type == pg.KEYDOWN:
                 self.y_speed -= PLAYER_JUMP_SPEED
 
@@ -65,5 +75,5 @@ class Player(pg.sprite.Sprite):
     def draw(self, surface):
         surface.blit(self.image, self.rect)
 
-        if self.show_collision:
-            pg.draw.rect(surface, (255, 0, 0), self.collision_rect, 2)
+        if SHOW_COLLISIONS:
+            pg.draw.rect(surface, RED_COLOR, self.collision_rect, 2)

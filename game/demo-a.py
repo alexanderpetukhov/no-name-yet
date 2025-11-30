@@ -11,12 +11,13 @@ from player import Player
 
 
 async def main():
-    screen, clock = initialize_pygame()
+    screen, clock, all_sprites = initialize_pygame()
     player = Player()
-    entities = [player]
+    all_sprites.add(player)
 
-    while process_events(player, entities):
-        render_game(screen)
+    while process_events(player):
+        all_sprites.update()
+        render_game(screen, all_sprites)
 
         clock.tick(FPS)
         await asyncio.sleep(0)

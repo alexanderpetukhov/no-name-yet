@@ -6,6 +6,7 @@ from constants import (
     MOVES,
     CAPTION,
     SCREEN_SIZE,
+    SCREEN_START,
     DEFAULT_BACKGROUND,
 )
 
@@ -14,13 +15,14 @@ def initialize_pygame():
     pg.init()
     screen: pg.Surface = pg.display.set_mode(SCREEN_SIZE)
     clock = pg.time.Clock()
+    all_sprites = pg.sprite.Group()
 
     screen.fill('black')
-    screen.blit(DEFAULT_BACKGROUND, (0, 0))
+    screen.blit(DEFAULT_BACKGROUND, SCREEN_START)
     pg.display.set_caption(CAPTION)
     pg.display.update()
 
-    return screen, clock
+    return screen, clock, all_sprites
 
 
 @cache
@@ -42,9 +44,8 @@ def is_move_event(event_type, event_key):
     return event_key in MOVES
 
 
-def process_events(player, entities):
+def process_events(player):
     is_running = True
-
 
     for event in pg.event.get():
         event_key = event.key if hasattr(event, 'key') else None
@@ -56,11 +57,13 @@ def process_events(player, entities):
         if is_move_event(event.type, event_key):
             player.move(event_key)
 
-    for entity in entities:
-        entity.update()
-
     return is_running
 
 
-def render_game(screen):
+def render_game(screen, all_sprites):
+    screen.blit(DEFAULT_BACKGROUND, SCREEN_START)
+
+    for sprite in all_sprites:
+        sprite.draw(screen)
+
     pg.display.flip()
